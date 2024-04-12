@@ -1,556 +1,558 @@
-CREATE DATABASE INVENTORY;
+create database inventory;
 
-USE INVENTORY;
+use inventory;
 
---SUPPLIER TABLE
+--supplier table
 
-CREATE TABLE SUPPLIER
-(SID CHAR(5) PRIMARY KEY,
-SNAME VARCHAR(30) NOT NULL,
-SADD VARCHAR(30) NOT NULL,
-SCITY VARCHAR(20) DEFAULT 'DELHI',
-SPHONE CHAR(15) UNIQUE,
-EMAIL VARCHAR(30));
+create table supplier
+(sid char(5) primary key,
+sname varchar(30) not null,
+sadd varchar(30) not null,
+scity varchar(20) default 'Delhi',
+sphone char(15) unique,
+email varchar(30));
 
-SELECT * FROM SUPPLIER;
+select * from supplier;
 
---PRODUCT TABLE
+--product table
 
-CREATE TABLE PRODUCT
-(PID CHAR(5) PRIMARY KEY,
-PDESC VARCHAR(30) NOT NULL,
-PRICE INT CHECK (PRICE>0),
-CATEGORY CHAR(2) CHECK (CATEGORY IN ('IT','HA','HC')),
-SID CHAR(5) REFERENCES SUPPLIER(SID));
+create table product
+(pid char(5) primary key,
+pdesc varchar(30) not null,
+price int check (price>0),
+category char(2) check (category in ('IT','HA','HC')),
+sid char(5) references supplier(sid));
 
 
-SELECT * FROM PRODUCT;
+select * from product;
 
---STOCK TABLE
+--stock table
 
-CREATE TABLE STOCK
-(PID CHAR(5) REFERENCES PRODUCT(PID),
-SQTY INT CHECK (SQTY>=0),
-ROL INT CHECK (ROL>0),
-MOQ INT CHECK (MOQ>=5));
+create table stock
+(pid char(5) references product(pid),
+sqty int check (sqty>=0),
+rol int check (rol>0),
+moq int check (moq>=5));
 
-SELECT * FROM STOCK;
+select * from stock;
 
---CUSTOMER TABLE
+--customer table
 
-CREATE TABLE CUST
-(CID CHAR(5) PRIMARY KEY,
-CNAME VARCHAR(30) NOT NULL,
-ADDRESS VARCHAR(30) NOT NULL,
-CITY VARCHAR(20) NOT NULL,
-PHONE CHAR(15) NOT NULL,
-EMAIL VARCHAR(30) NOT NULL,
-DOB DATE CHECK (DOB<'2000-01-01'));
+create table cust
+(cid char(5) primary key,
+cname varchar(30) not null,
+address varchar(30) not null,
+city varchar(20) not null,
+phone char(15) not null,
+email varchar(30) not null,
+dob date check (dob<'2000-01-01'));
 
-SELECT * FROM CUST;
+select * from cust;
 
---ORDERS TABLE
+--orders table
 
-CREATE TABLE ORDERS
-(OID CHAR(5) PRIMARY KEY,
-ODATE DATE,
-PID CHAR(5) REFERENCES PRODUCT(PID),
-CID CHAR(5) REFERENCES CUST(CID),
-OQTY INT CHECK (OQTY>=1));
+create table orders
+(oid char(5) primary key,
+odate date,
+pid char(5) references product(pid),
+cid char(5) references cust(cid),
+oqty int check (oqty>=1));
 
-SELECT * FROM ORDERS;
 
-INSERT INTO SUPPLIER(SID,SNAME,SADD,SPHONE,EMAIL)
-VALUES('S0001','Shubham Kumar','A-Block,Janakpuri','9899958404','shubham.kumar@gmail.com');
+select * from orders;
 
-INSERT INTO SUPPLIER(SID,SNAME,SADD,SPHONE,EMAIL)
-VALUES('S0002','Rajat Kapoor','C-Block,Janakpuri','9891894436','krajat@yahoo.com');
+insert into supplier(sid,sname,sadd,sphone,email)
+values('S0001','Shubham Kumar','A-Block,Janakpuri','9899958404','shubham.kumar@gmail.com');
 
-INSERT INTO SUPPLIER
-VALUES('S0003','Rajveer Singh','Sky View Appts','BENGALURU','8595763010','rajveersingh87@gmail.com');
+insert into supplier(sid,sname,sadd,sphone,email)
+values('S0002','Rajat Kapoor','C-Block,Janakpuri','9891894436','krajat@yahoo.com');
 
-INSERT INTO SUPPLIER
-VALUES('S0004','Ashok Jain','Banjara Hills','HYDERABAD','8810809956','ashokjain@gmail.com');
+insert into supplier
+values('S0003','Rajveer Singh','Sky View Appts','Bengaluru','8595763010','rajveersingh87@gmail.com');
 
-INSERT INTO SUPPLIER
-VALUES('S0005','Garv Ahluwalia','Anjanapura','BENGALURU','9910608558','gwalia@gmail.com');
+insert into supplier
+values('S0004','Ashok Jain','Banjara Hills','Hyderabad','8810809956','ashokjain@gmail.com');
 
-INSERT INTO SUPPLIER
-VALUES('S0006','Aman Kapoor','Krishnagiri','TAMIL NADU','8899103966','akapoor@yahoo.com');
+insert into supplier
+values('S0005','Garv Ahluwalia','Anjanapura','Bengaluru','9910608558','gwalia@gmail.com');
 
-INSERT INTO SUPPLIER(SID,SNAME,SADD,SPHONE,EMAIL)
-VALUES('S0007','Arshil Khan','Vasant Kunj','9991088995','ak.arshilkhan@yahoo.com');
+insert into supplier
+values('S0006','Aman Kapoor','Krishnagiri','Tamil Nadu','8899103966','akapoor@yahoo.com');
 
-INSERT INTO SUPPLIER(SID,SNAME,SADD,SPHONE,EMAIL)
-VALUES('S0008','Vikas Gulia','Model Town','9988106655','vgulia95@gmail.com');
+insert into supplier(sid,sname,sadd,sphone,email)
+values('S0007','Arshil Khan','Vasant Kunj','9991088995','ak.arshilkhan@yahoo.com');
 
-INSERT INTO SUPPLIER
-VALUES('S0009','Mayank Gahlot','Bannerghatta Road','BENGALURU','8595866660','gahlotmayank@gmail.com');
+insert into supplier(sid,sname,sadd,sphone,email)
+values('S0008','Vikas Gulia','Model Town','9988106655','vgulia95@gmail.com');
 
-INSERT INTO SUPPLIER(SID,SNAME,SADD,SPHONE,EMAIL)
-VALUES('S0010','Shobhit Nirwan','Sec-34,Noida','8195392377','shobhitn89@gmail.com');
+insert into supplier(sid,sname,sadd,sphone,email)
+values('S0009','Mayank Gahlot','Bannerghatta Road','Bengaluru','8595866660','gahlotmayank@gmail.com');
 
---DELETE FROM SUPPLIER
---WHERE SID='S0003';
+insert into supplier(sid,sname,sadd,sphone,email)
+values('S0010','Shobhit Nirwan','Sec-34,Noida','8195392377','shobhitn89@gmail.com');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0001','Pollution Mask',75,'HC','S0008');
+--delete from supplier
+--where sid='S0003';
 
---DELETE FROM PRODUCT
---WHERE PID='P0001';
+insert into product(pid,pdesc,price,category,sid)
+values('P0001','Pollution Mask',75,'HC','S0008');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0002','Keyboard',2500,'IT','S0009');
+--delete from product
+--where pid='P0001';
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0003','Pen Drive',4000,'IT','S0001');
+insert into product(pid,pdesc,price,category,sid)
+values('P0002','Keyboard',2500,'IT','S0009');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0004','Refrigerator',18000,'HA','S0005');
+insert into product(pid,pdesc,price,category,sid)
+values('P0003','Pen Drive',4000,'IT','S0001');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0005','Microwave',3200,'HA','S0006');
+insert into product(pid,pdesc,price,category,sid)
+values('P0004','Refrigerator',18000,'HA','S0005');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0006','Mouse',2800,'IT','S0010');
+insert into product(pid,pdesc,price,category,sid)
+values('P0005','Microwave',3200,'HA','S0006');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0007','Hard Disk',5000,'IT','S0009');
+insert into product(pid,pdesc,price,category,sid)
+values('P0006','Mouse',2800,'IT','S0010');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0008','Syringes',1200,'HC','S0008');
+insert into product(pid,pdesc,price,category,sid)
+values('P0007','Hard Disk',5000,'IT','S0009');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0009','Antiseptic Liquid',50,'HC','S0004');
+insert into product(pid,pdesc,price,category,sid)
+values('P0008','Syringes',1200,'HC','S0008');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0010','Water Heater',1200,'HA','S0006');
+insert into product(pid,pdesc,price,category,sid)
+values('P0009','Antiseptic Liquid',50,'HC','S0004');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0011','Multivitamin Tablets',430,'HC','S0002');
+insert into product(pid,pdesc,price,category,sid)
+values('P0010','Water Heater',1200,'HA','S0006');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0012','Calcium Tablets',380,'HC','S0002');
+insert into product(pid,pdesc,price,category,sid)
+values('P0011','Multivitamin Tablets',430,'HC','S0002');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0013','Iphone 15',60000,'IT','S0004');
+insert into product(pid,pdesc,price,category,sid)
+values('P0012','Calcium Tablets',380,'HC','S0002');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0014','Earphones',4500,'IT','S0007');
+insert into product(pid,pdesc,price,category,sid)
+values('P0013','Iphone 15',60000,'IT','S0004');
 
-INSERT INTO PRODUCT(PID,PDESC,PRICE,CATEGORY,SID)
-VALUES('P0015','Airfryer',2800,'HA','S0007');
+insert into product(pid,pdesc,price,category,sid)
+values('P0014','Earphones',4500,'IT','S0007');
 
-INSERT INTO STOCK(PID,SQTY,ROL,MOQ)
-VALUES('P0011',35,5,15);
+insert into product(pid,pdesc,price,category,sid)
+values('P0015','Airfryer',2800,'HA','S0007');
 
-INSERT INTO STOCK
-VALUES('P0007',50,12,25);
+insert into stock(pid,sqty,rol,moq)
+values('P0011',35,5,15);
 
-INSERT INTO STOCK
-VALUES('P0001',100,25,50);
+insert into stock
+values('P0007',50,12,25);
 
-INSERT INTO STOCK
-VALUES('P0004',30,8,15);
+insert into stock
+values('P0001',100,25,50);
 
-INSERT INTO STOCK
-VALUES('P0008',500,150,250);
+insert into stock
+values('P0004',30,8,15);
 
-INSERT INTO STOCK
-VALUES('P0013',250,25,175);
+insert into stock
+values('P0008',500,150,250);
 
-INSERT INTO STOCK
-VALUES('P0010',200,50,80);
+insert into stock
+values('P0013',250,25,175);
 
-INSERT INTO STOCK
-VALUES('P0005',300,10,150);
+insert into stock
+values('P0010',200,50,80);
 
-INSERT INTO STOCK
-VALUES('P0003',1000,550,800);
+insert into stock
+values('P0005',300,10,150);
 
-INSERT INTO STOCK
-VALUES('P0015',150,50,75);
+insert into stock
+values('P0003',1000,550,800);
 
---DROP TABLE SUPPLIER;
+insert into stock
+values('P0015',150,50,75);
 
-INSERT INTO CUST(CID,CNAME,ADDRESS,CITY,PHONE,EMAIL,DOB)
-VALUES('C0001','Abhishek Jain','Basavanagudi','Bengaluru','8509174474','abhi.jain96@gmail.com','1996-06-09');
+--drop table supplier;
 
-INSERT INTO CUST
-VALUES('C0002','Amit Kumar Verma','Defence Colony','Delhi','9009648499','amitverma@yahoo.com','1985-10-15');
+insert into cust(cid,cname,address,city,phone,email,dob)
+values('C0001','Abhishek Jain','Basavanagudi','Bengaluru','8509174474','abhi.jain96@gmail.com','1996-06-09');
 
-INSERT INTO CUST
-VALUES('C0003','Avinash Patil','East Of Kailash','Delhi','8386489686','avipatil98@gmail.com','1998-09-18');
+insert into cust
+values('C0002','Amit Kumar Verma','Defence Colony','Delhi','9009648499','amitverma@yahoo.com','1985-10-15');
 
-INSERT INTO CUST
-VALUES('C0004','Nameera Khan','Badshahpur','Haryana','7527809189','nameerak@yahoo.com','1999-01-01');
+insert into cust
+values('C0003','Avinash Patil','East Of Kailash','Delhi','8386489686','avipatil98@gmail.com','1998-09-18');
 
-INSERT INTO CUST
-VALUES('C0005','Partha Pratim Das','Kalkaji','Delhi','9236315415','pratimdas95@gmail.com','1995-11-05');
+insert into cust
+values('C0004','Nameera Khan','Badshahpur','Haryana','7527809189','nameerak@yahoo.com','1999-01-01');
 
-INSERT INTO CUST
-VALUES('C0006','Sanket Maity','Dhankot','Haryana','8819052944','smaity.76@yahoo.com','1976-06-28');
+insert into cust
+values('C0005','Partha Pratim Das','Kalkaji','Delhi','9236315415','pratimdas95@gmail.com','1995-11-05');
 
-INSERT INTO CUST
-VALUES('C0007','Ansh Gupta','Chandapura','Bengaluru','9708729721','gupta.ansh@gmail.com','1991-04-24');
+insert into cust
+values('C0006','Sanket Maity','Dhankot','Haryana','8819052944','smaity.76@yahoo.com','1976-06-28');
 
-INSERT INTO CUST
-VALUES('C0008','Nuaa Rawat','Farrukh Nagar','Haryana','8215961141','nuaarawat@gmail.com','1994-08-03');
+insert into cust
+values('C0007','Ansh Gupta','Chandapura','Bengaluru','9708729721','gupta.ansh@gmail.com','1991-04-24');
 
-INSERT INTO CUST
-VALUES('C0009','Monika Saini','Lodi Road','Delhi','9916141251','saini.monika@gmail.com','1989-07-26');
+insert into cust
+values('C0008','Nuaa Rawat','Farrukh Nagar','Haryana','8215961141','nuaarawat@gmail.com','1994-08-03');
 
-INSERT INTO CUST
-VALUES('C0010','Ashwarya','Ankushapur','Hyderabad','9791919267','ash.85@gmail.com','1985-05-11');
+insert into cust
+values('C0009','Monika Saini','Lodi Road','Delhi','9916141251','saini.monika@gmail.com','1989-07-26');
 
-INSERT INTO ORDERS(OID,ODATE,PID,CID,OQTY)
-VALUES('O0001','2021-09-18','P0013','C0008',1);
+insert into cust
+values('C0010','Ashwarya','Ankushapur','Hyderabad','9791919267','ash.85@gmail.com','1985-05-11');
 
-INSERT INTO ORDERS
-VALUES('O0002','2023-10-01','P0009','C0003',12);
+insert into orders(oid,odate,pid,cid,oqty)
+values('O0001','2021-09-18','P0013','C0008',1);
 
-INSERT INTO ORDERS
-VALUES('O0003','2018-08-10','P0007','C0005',2);
+insert into orders
+values('O0002','2023-10-01','P0009','C0003',12);
 
-INSERT INTO ORDERS
-VALUES('O0004','2019-11-24','P0009','C0003',15);
+insert into orders
+values('O0003','2018-08-10','P0007','C0005',2);
 
-INSERT INTO ORDERS
-VALUES('O0005','2014-02-21','P0008','C0010',28);
+insert into orders
+values('O0004','2019-11-24','P0009','C0003',15);
 
---Q1
+insert into orders
+values('O0005','2014-02-21','P0008','C0010',28);
 
-SELECT PID,PDESC,CATEGORY,SNAME,SCITY 
-FROM PRODUCT AS P1
-JOIN SUPPLIER AS S1
-ON P1.SID=S1.SID;
+--q1
 
---Q2
+select pid,pdesc,category,sname,scity 
+from product as p1
+join supplier as s1
+on p1.sid=s1.sid;
 
-SELECT OID,ODATE,CNAME,ADDRESS AS 'CADDRESS',PHONE AS 'CPHONE',PDESC,PRICE,OQTY,(PRICE*OQTY) AS 'AMT'
-FROM ORDERS AS O1
-JOIN CUST AS C1
-ON O1.CID=C1.CID
-JOIN PRODUCT AS P1
-ON P1.PID=O1.PID;
+--q2
 
-CREATE VIEW BILL 
-AS
-SELECT O.OID,O.ODATE, C.CNAME, C.ADDRESS, C.PHONE, P.PDESC, P.PRICE, O.OQTY,( P.PRICE * O.OQTY) AS 'AMOUNT'
-FROM ORDERS AS O
-JOIN CUST AS C 
-ON O.CID = C.CID
-JOIN PRODUCT AS P 
-ON O.PID = P.PID;
+select oid,odate,cname,address as 'caddress',phone as 'cphone',pdesc,price,oqty,(price*oqty) as 'amt'
+from orders as o1
+join cust as c1
+on o1.cid=c1.cid
+join product as p1
+on p1.pid=o1.pid;
 
-SELECT * FROM BILL;
+create view bill 
+as
+select o.oid,o.odate, c.cname, c.address, c.phone, p.pdesc, p.price, o.oqty,( p.price * o.oqty) as 'amount'
+from orders as o
+join cust as c 
+on o.cid = c.cid
+join product as p 
+on o.pid = p.pid;
 
+select * from bill;
 
-SELECT OID, ODATE, CNAME, ADDRESS, PHONE, PDESC, PRICE, OQTY,( PRICE * OQTY) AS 'AMOUNT'
-FROM ORDERS 
-JOIN CUST  
-ON ORDERS.CID = CUST.CID
-JOIN PRODUCT  
-ON ORDERS.PID = PRODUCT.PID;
 
---ASSIGNMENT 8
+select oid, odate, cname, address, phone, pdesc, price, oqty,( price * oqty) as 'amount'
+from orders 
+join cust  
+on orders.cid = cust.cid
+join product  
+on orders.pid = product.pid;
 
-CREATE PROCEDURE ADDSUPPLIER @ID AS CHAR(5), @N AS VARCHAR(30), @ADR AS VARCHAR(30), @C AS VARCHAR(30), @PH AS CHAR(15), @EM AS VARCHAR(30)
-AS
-BEGIN
-	INSERT INTO SUPPLIER
-	VALUES(@ID, @N ,@ADR, @C, @PH, @EM);
+--assignment 8
 
-	SELECT * FROM SUPPLIER WHERE SID = @ID;
-END;
+create procedure addsupplier @id as char(5), @n as varchar(30), @adr as varchar(30), @c as varchar(30), @ph as char(15), @em as varchar(30)
+as
+begin
+	insert into supplier
+	values(@id, @n ,@adr, @c, @ph, @em);
 
-ADDSUPPLIER 'S0011', 'Abhilash Garg', 'Sec-22,Gurgaon', 'GURGAON', '9999167998', 'ab.garg@gmail.com';
+	select * from supplier where sid = @id;
+end;
 
-DELETE FROM SUPPLIER
-WHERE SID='S0011';
+addsupplier 'S0011', 'Abhilash Garg', 'Sec-22,Gurgaon', 'Gurgaon', '9999167998', 'ab.garg@gmail.com';
 
---DROP PROCEDURE ADDSUPPLIER;
+delete from supplier
+where sid='S0011';
 
-SELECT * FROM SUPPLIER;
+--drop procedure addsupplier;
 
---ASSIGNMENT 9
+select * from supplier;
 
-CREATE SEQUENCE SSEQ
-AS INT
-START WITH 11
-INCREMENT BY 1;
+--assignment 9
 
---DROP SEQUENCE SSEQ;
+create sequence sseq
+as int
+start with 11
+increment by 1;
 
-SELECT NEXT VALUE FOR SSEQ;
+--drop sequence sseq;
 
-CREATE PROCEDURE ADDSUPPLIER @SN AS VARCHAR(30), @ADR AS VARCHAR(30), @C AS VARCHAR(30), @PH AS CHAR(15), @EM AS VARCHAR(30)
-AS
-BEGIN
-	DECLARE @I AS INT;
-	DECLARE @ID AS CHAR(5);
-	SET @I = (NEXT VALUE FOR SSEQ);
+select next value for sseq;
+
+create procedure addsupplier @sn as varchar(30), @adr as varchar(30), @c as varchar(30), @ph as char(15), @em as varchar(30)
+as
+begin
+	declare @i as int;
+	declare @id as char(5);
+	set @i = (next value for sseq);
 	
-	SET @ID = DBO.SUPP_ID ('S', @I);
+	set @id = dbo.supp_id ('s', @i);
 	
-	INSERT INTO SUPPLIER
-	VALUES(@ID, @SN, @ADR, @C, @PH, @EM);
+	insert into supplier
+	values(@id, @sn, @adr, @c, @ph, @em);
 
-	SELECT * FROM SUPPLIER;
-END;
+	select * from supplier;
+end;
 
---DROP FUNCTION SUPP_ID;
+--drop function supp_id;
 
-CREATE FUNCTION SUPP_ID (@S AS CHAR(1), @I AS INT)
-RETURNS CHAR(5)
-AS
-BEGIN
-	DECLARE @ID AS CHAR(5);
-	    IF @I < 100
-		SET @ID = CONCAT(@S,'00', @I);
-	ELSE IF @I < 1000
-		SET @ID = CONCAT(@S,'0', @I);
-	ELSE IF @I < 10000
-		SET @ID = CONCAT(@S, @I);
-	ELSE
-		SET @ID = 'NA';
-	RETURN @ID;
-END;
+create function supp_id (@s as char(1), @i as int)
+returns char(5)
+as
+begin
+	declare @id as char(5);
+	    if @i < 100
+		set @id = concat(@s,'00', @i);
+	else if @i < 1000
+		set @id = concat(@s,'0', @i);
+	else if @i < 10000
+		set @id = concat(@s, @i);
+	else
+		set @id = 'na';
+	return @id;
+end;
 
-ADDSUPPLIER 'Abhilash Garg', 'Sec-22,Gurgaon', 'GURGAON', '9999167998', 'ab.garg@gmail.com';
+addsupplier 'Abhilash Garg', 'Sec-22,Gurgaon', 'Gurgaon', '9999167998', 'ab.garg@gmail.com';
 
-CREATE SEQUENCE PSEQ
-AS INT
-START WITH 16
-INCREMENT BY 1;
+create sequence pseq
+as int
+start with 16
+increment by 1;
 
-CREATE PROCEDURE ADDPRO @PD AS VARCHAR(30), @P AS INT, @C AS CHAR(2), @SID AS CHAR(5)
-AS
-BEGIN
-	DECLARE @I AS INT;
-	DECLARE @ID AS CHAR(5);
-	SET @I = (NEXT VALUE FOR PSEQ);
+create procedure addpro @pd as varchar(30), @p as int, @c as char(2), @sid as char(5)
+as
+begin
+	declare @i as int;
+	declare @id as char(5);
+	set @i = (next value for pseq);
 	
-	SET @ID = DBO.PROD_ID ('P', @I);
+	set @id = dbo.prod_id ('p', @i);
 	
-	INSERT INTO PRODUCT
-	VALUES(@ID, @PD, @P, @C, @SID);
+	insert into product
+	values(@id, @pd, @p, @c, @sid);
 
-	SELECT * FROM PRODUCT;
-END;
+	select * from product;
+end;
 
---DROP FUNCTION PROD_ID;
+--drop function prod_id;
 
-CREATE FUNCTION PROD_ID (@P AS CHAR(1), @I AS INT)
-RETURNS CHAR(5)
-AS
-BEGIN
-	DECLARE @ID AS CHAR(5);
-	    IF @I < 100
-		SET @ID = CONCAT(@P,'00', @I);
-	ELSE IF @I < 1000
-		SET @ID = CONCAT(@P,'0', @I);
-	ELSE IF @I < 10000
-		SET @ID = CONCAT(@P, @I);
-	ELSE
-		SET @ID = 'NA';
-	RETURN @ID;
-END;
+create function prod_id (@p as char(1), @i as int)
+returns char(5)
+as
+begin
+	declare @id as char(5);
+	    if @i < 100
+		set @id = concat(@p,'00', @i);
+	else if @i < 1000
+		set @id = concat(@p,'0', @i);
+	else if @i < 10000
+		set @id = concat(@p, @i);
+	else
+		set @id = 'na';
+	return @id;
+end;
 
-ADDPRO 'Hard Disk 2TB', 8000, 'IT', 'S0001';
+addpro 'Hard Disk 2TB', 8000, 'IT', 'S0001';
 
 
-CREATE SEQUENCE CSEQ
-AS INT
-START WITH 11
-INCREMENT BY 1;
+create sequence cseq
+as int
+start with 11
+increment by 1;
 
---DROP SEQUENCE CSEQ;
+--drop sequence cseq;
 
-CREATE PROCEDURE ADDCUST @CN AS VARCHAR(30), @ADR AS VARCHAR(30), @C AS VARCHAR(30), @PH AS CHAR(15), @EM AS VARCHAR(30), @DB AS DATE
-AS
-BEGIN
-	DECLARE @I AS INT;
-	DECLARE @ID AS CHAR(5);
-	SET @I = (NEXT VALUE FOR CSEQ);
+create procedure addcust @cn as varchar(30), @adr as varchar(30), @c as varchar(30), @ph as char(15), @em as varchar(30), @db as date
+as
+begin
+	declare @i as int;
+	declare @id as char(5);
+	set @i = (next value for cseq);
 	
-	SET @ID = DBO.CUST_ID ('C', @I);
+	set @id = dbo.cust_id ('c', @i);
 	
-	INSERT INTO CUST
-	VALUES(@ID, @CN, @ADR, @C, @PH, @EM, @DB);
+	insert into cust
+	values(@id, @cn, @adr, @c, @ph, @em, @db);
 
-	SELECT * FROM CUST;
-END;
+	select * from cust;
+end;
 
---DROP PROCEDURE ADDCUST;
+--drop procedure addcust;
 
-CREATE FUNCTION CUST_ID (@C AS CHAR(1), @I AS INT)
-RETURNS CHAR(5)
-AS
-BEGIN
-	DECLARE @ID AS CHAR(5);
-	     IF @I < 10
-		SET @ID = CONCAT(@C,'000', @I);
-    ELSE IF @I < 100
-		SET @ID = CONCAT(@C,'00', @I);
-	ELSE IF @I < 1000
-		SET @ID = CONCAT(@C,'0', @I);
-	ELSE IF @I < 10000
-		SET @ID = CONCAT(@C, @I);
-	ELSE
-		SET @ID = 'NA';
-	RETURN @ID;
-END;
+create function cust_id (@c as char(1), @i as int)
+returns char(5)
+as
+begin
+	declare @id as char(5);
+	     if @i < 10
+		set @id = concat(@c,'000', @i);
+    else if @i < 100
+		set @id = concat(@c,'00', @i);
+	else if @i < 1000
+		set @id = concat(@c,'0', @i);
+	else if @i < 10000
+		set @id = concat(@c, @i);
+	else
+		set @id = 'na';
+	return @id;
+end;
 
---DROP FUNCTION CUST_ID;
+--drop function cust_id;
 
-ADDCUST 'Ranvijay Singh', 'Gurgaon', 'Haryana', '9899911188', 'ranvjsingh@gmail.com', '1999-02-18';
+addcust 'Ranvijay Singh', 'Gurgaon', 'Haryana', '9899911188', 'ranvjsingh@gmail.com', '1999-02-18';
 
---DELETE FROM CUST
---WHERE CID='NA';
+--delete from cust
+--where cid='na';
 
-CREATE SEQUENCE OSEQ
-AS INT
-START WITH 6
-INCREMENT BY 1;
+create sequence oseq
+as int
+start with 6
+increment by 1;
 
---DROP SEQUENCE CSEQ;
+--drop sequence cseq;
 
-CREATE PROCEDURE ADDORDER @PID AS CHAR(5), @CID AS CHAR(5), @OQT AS INT
-AS
-BEGIN
-    DECLARE @OD AS DATE = GETDATE();
-	DECLARE @I AS INT;
-	DECLARE @ID AS CHAR(5);
-	SET @I = (NEXT VALUE FOR OSEQ);
+create procedure addorder @pid as char(5), @cid as char(5), @oqt as int
+as
+begin
+    declare @od as date = getdate();
+	declare @i as int;
+	declare @id as char(5);
+	set @i = (next value for oseq);
 	
-	SET @ID = DBO.ORDER_ID ('O', @I);
+	set @id = dbo.order_id ('o', @i);
 	
-	INSERT INTO ORDERS
-	VALUES(@ID, @OD, @PID, @CID, @OQT);
+	insert into orders
+	values(@id, @od, @pid, @cid, @oqt);
 
-	SELECT * FROM ORDERS;
-END;
+	select * from orders;
+end;
 
---DROP PROCEDURE ADDORDER;
+--drop procedure addorder;
 
-CREATE FUNCTION ORDER_ID (@O AS CHAR(1), @I AS INT)
-RETURNS CHAR(5)
-AS
-BEGIN
-	DECLARE @ID AS CHAR(5);
-	     IF @I < 10
-		SET @ID = CONCAT(@O,'000', @I);
-    ELSE IF @I < 100
-		SET @ID = CONCAT(@O,'00', @I);
-	ELSE IF @I < 1000
-		SET @ID = CONCAT(@O,'0', @I);
-	ELSE IF @I < 10000
-		SET @ID = CONCAT(@O, @I);
-	ELSE
-		SET @ID = 'NA';
-	RETURN @ID;
-END;
+create function order_id (@o as char(1), @i as int)
+returns char(5)
+as
+begin
+	declare @id as char(5);
+	     if @i < 10
+		set @id = concat(@o,'000', @i);
+    else if @i < 100
+		set @id = concat(@o,'00', @i);
+	else if @i < 1000
+		set @id = concat(@o,'0', @i);
+	else if @i < 10000
+		set @id = concat(@o, @i);
+	else
+		set @id = 'na';
+	return @id;
+end;
 
-ADDORDER 'P0006', 'C0004', 10;
+addorder 'P0006', 'C0004', 10;
 
 ---------
 
-CREATE TABLE PURCHASE(PID CHAR(5),SID CHAR(5), PQTY INT, DOP DATE NOT NULL);
+create table purchase(pid char(5),sid char(5), pqty int, dop date not null);
 
-ALTER TABLE PURCHASE
-ADD CONSTRAINT FK_PID FOREIGN KEY (PID) REFERENCES PRODUCT(PID);
+alter table purchase
+add constraint fk_pid foreign key (pid) references product(pid);
 
-ALTER TABLE PURCHASE
-ADD CONSTRAINT FK_SID FOREIGN KEY (SID) REFERENCES SUPPLIER(SID);
+alter table purchase
+add constraint fk_sid foreign key (sid) references supplier(sid);
 
 
-SELECT * FROM ORDERS;
+select * from orders;
 
-SELECT * FROM STOCK;
+select * from stock;
 
-SELECT * FROM PURCHASE;
+select * from purchase;
 
---UPDATE STOCK SET SQTY=20
---WHERE PID='P0004';
+--update stock set sqty=20
+--where pid='P0004';
 
-CREATE TRIGGER INVENTORY_CHECK
-ON ORDERS
-FOR INSERT
-AS
-BEGIN
-	DECLARE @QR AS INT;
-	DECLARE @QS AS INT;
-	DECLARE @ROL AS INT;
-	DECLARE @PQTY AS INT;
-	DECLARE @PID AS CHAR(5);
-	DECLARE @SID AS CHAR(5);
-	DECLARE @DOP AS DATE;
+create trigger inventory_check
+on orders
+for insert
+as
+begin
+	declare @qr as int;
+	declare @qs as int;
+	declare @rol as int;
+	declare @pqty as int;
+	declare @pid as char(5);
+	declare @sid as char(5);
+	declare @dop as date;
 
-	SET @QR= (SELECT OQTY FROM INSERTED);
-	SET @QS=(SELECT SQTY FROM STOCK WHERE PID= (SELECT PID FROM INSERTED));
-	SET @ROL=(SELECT ROL FROM STOCK WHERE PID=(SELECT PID FROM INSERTED));
-	SET @PQTY=(SELECT MOQ FROM STOCK WHERE PID=(SELECT PID FROM INSERTED));
-	SET @PID= (SELECT PID FROM INSERTED);
-	SET @SID= (SELECT SID FROM PRODUCTS WHERE PID =(SELECT PID FROM INSERTED));
-	SET @DOP =CONVERT(VARCHAR(10), GETDATE(), 111);
+	set @qr= (select oqty from inserted);
+	set @qs=(select sqty from stock where pid= (select pid from inserted));
+	set @rol=(select rol from stock where pid=(select pid from inserted));
+	set @pqty=(select moq from stock where pid=(select pid from inserted));
+	set @pid= (select pid from inserted);
+	set @sid= (select sid from products where pid =(select pid from inserted));
+	set @dop =convert(varchar(10), getdate(), 111);
 
-	IF (@QS>=@QR)
-		BEGIN
-			UPDATE STOCK SET SQTY= SQTY-@QR
-			WHERE PID=(SELECT PID FROM INSERTED)
+	if (@qs>=@qr)
+		begin
+			update stock set sqty= sqty-@qr
+			where pid=(select pid from inserted)
 	
-			PRINT('ORDER ACCEPTED!!')
-			IF ((@QS-@QR)<@ROL)
-				BEGIN
-					INSERT INTO PURCHASE
-					VALUES(@PID,@SID,@PQTY,@DOP);
+			print('order accepted!!')
+			if ((@qs-@qr)<@rol)
+				begin
+					insert into purchase
+					values(@pid,@sid,@pqty,@dop);
 
-					UPDATE STOCK SET SQTY=SQTY+@PQTY
-					WHERE PID=(SELECT PID FROM INSERTED);
+					update stock set sqty=sqty+@pqty
+					where pid=(select pid from inserted);
 
-				END;
-			COMMIT;
-		END;
-	ELSE
-		BEGIN
-			ROLLBACK;
-			PRINT('INSUFFICIENT QUANTITY, ORDER REJECTED.')
-		END;
-END;
+				end;
+			commit;
+		end;
+	else
+		begin
+			rollback;
+			print('insufficient quantity, order rejected.')
+		end;
+end;
 
---DROP TRIGGER INVENTORY_CHECK;
+--drop trigger inventory_check;
 
-CREATE TRIGGER STOCK_UPDATE
-ON ORDERS
-FOR UPDATE
-AS
-BEGIN
-	DECLARE @OQ AS INT;
-	DECLARE @NQ AS INT;
-	DECLARE @QS AS INT;
+create trigger stock_update
+on orders
+for update
+as
+begin
+	declare @oq as int;
+	declare @nq as int;
+	declare @qs as int;
 
-	SET @OQ= (SELECT OQTY FROM DELETED);
-	SET @NQ= (SELECT OQTY FROM INSERTED);
-	SET @QS=(SELECT SQTY FROM STOCK WHERE PID=(SELECT PID FROM INSERTED));
+	set @oq= (select oqty from deleted);
+	set @nq= (select oqty from inserted);
+	set @qs=(select sqty from stock where pid=(select pid from inserted));
 
-	IF (@QS>=@NQ)
-		BEGIN
-			UPDATE STOCK SET SQTY= SQTY+@OQ-@NQ
-			WHERE PID= (SELECT PID FROM INSERTED);
-			COMMIT;
-			PRINT('ORDER UPDATED SUCCESSFULLY')
-		END;
-	ELSE
-		BEGIN
-			ROLLBACK;
-			PRINT('ORDER REJECTED DUE TO INSUFFICIENT STOCK')
-		END;
-END;
+	if (@qs>=@nq)
+		begin
+			update stock set sqty= sqty+@oq-@nq
+			where pid= (select pid from inserted);
+			commit;
+			print('order updated successfully')
+		end;
+	else
+		begin
+			rollback;
+			print('order rejected due to insufficient stock')
+		end;
+end;
 
---DROP TRIGGER STOCK_UPDATE;
+--drop trigger stock_update;
 
-UPDATE ORDERS SET OQTY=10
-WHERE OID='O0001';
+update orders set oqty=10
+where oid='O0001';
+
 
 
