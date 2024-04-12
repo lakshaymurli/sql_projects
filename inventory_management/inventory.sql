@@ -555,4 +555,15 @@ update orders set oqty=10
 where oid='O0001';
 
 
+--change database name
+
+use master;  
+go  
+alter database inventory set single_user with rollback immediate;
+go
+alter database inventory modify name=inventory;
+go  
+alter database inventory set multi_user;
+go
+
 
